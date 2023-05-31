@@ -1,10 +1,13 @@
 package edu.miu.restful.repo.impl;
 import edu.miu.restful.entity.Post;
+import edu.miu.restful.entity.Product;
 import edu.miu.restful.repo.PostRepo;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 public class PostRepoImpl implements PostRepo {
     private static List<Post> posts;
@@ -53,5 +56,12 @@ public class PostRepoImpl implements PostRepo {
                 .findFirst()
                 .orElse(null);
 
+    }
+
+    @Override
+    public List<Post>findAllAuthorByName(String author){
+        return posts.stream()
+                .filter(p -> p.getAuthor().equals(author))
+                .collect(Collectors.toList());
     }
 }

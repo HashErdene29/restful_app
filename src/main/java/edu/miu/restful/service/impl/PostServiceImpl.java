@@ -2,6 +2,7 @@ package edu.miu.restful.service.impl;
 
 import edu.miu.restful.entity.Post;
 import edu.miu.restful.entity.dto.PostDto;
+import edu.miu.restful.entity.dto.ProductDto;
 import edu.miu.restful.helper.ListMapper;
 import edu.miu.restful.repo.PostRepo;
 import edu.miu.restful.service.PostService;
@@ -45,5 +46,9 @@ public class PostServiceImpl implements PostService {
     public void update(int id,  PostDto p) {
         postRepo.update(id, modelMapper.map(p, Post.class));
     }
+
+    @Override
+    public List<PostDto>findAllAuthorByName(String author){
+        return (List<PostDto>) listMapper.mapList(postRepo.findAllAuthorByName(author),new PostDto());}
 
 }

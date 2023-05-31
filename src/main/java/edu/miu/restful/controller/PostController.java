@@ -23,16 +23,16 @@ public class PostController {
         this.postService = postService;
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    public List<PostDto> getAll() {
-        return postService.findAll();
-    }
 //    @ResponseStatus(HttpStatus.OK)
 //    @GetMapping
-//    public List<ProductDto> getAll(@RequestParam(value = "filter" ,required = false) Integer price) {
-//        return price==null?productService.findAll():productService.findAllPriceGreaterThan(price);
+//    public List<PostDto> getAll() {
+//        return postService.findAll();
 //    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<PostDto> getAll(@RequestParam(value = "filter" ,required = false) String author) {
+        return author==null?postService.findAll():postService.findAllAuthorByName(author);
+    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -80,7 +80,7 @@ public class PostController {
         EntityModel<PostDto> resource = EntityModel.of(post);
         WebMvcLinkBuilder linkTo = WebMvcLinkBuilder
                 .linkTo(
-                        WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
+                        WebMvcLinkBuilder.methodOn(this.getClass()).getAll(""));
         resource.add(linkTo.withRel("all-posts"));
 
         return resource;

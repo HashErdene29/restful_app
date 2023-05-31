@@ -1,6 +1,7 @@
 package edu.miu.restful.repo;
 
 import edu.miu.restful.entity.Post;
+import edu.miu.restful.entity.Product;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface PostRepo {
     public void delete(int id);
 
     public void update(int id, Post p);
+
+    List<Post>findAllAuthorByName(String author);
 }
