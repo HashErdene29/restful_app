@@ -1,6 +1,5 @@
 package edu.miu.restful.repo.impl;
 import edu.miu.restful.entity.Post;
-import edu.miu.restful.entity.Product;
 import edu.miu.restful.repo.PostRepo;
 import org.springframework.stereotype.Repository;
 

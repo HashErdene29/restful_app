@@ -2,7 +2,6 @@ package edu.miu.restful.service.impl;
 
 import edu.miu.restful.entity.Post;
 import edu.miu.restful.entity.dto.PostDto;
-import edu.miu.restful.entity.dto.ProductDto;
 import edu.miu.restful.helper.ListMapper;
 import edu.miu.restful.repo.PostRepo;
 import edu.miu.restful.service.PostService;
