@@ -26,49 +26,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    public List<UserDto> getAll() {
-        return userService.findAll();
-    }
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping
-//    public List<ProductDto> getAll(@RequestParam(value = "filter" ,required = false) Integer price) {
-//        return price==null?productService.findAll():productService.findAllPriceGreaterThan(price);
+//    @GetMapping("/{id}/posts")
+//    public UserDetailDto getPostsByUserId(@PathVariable int id) {
+//        return userService.getPostsByUserId(id);
 //    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public void save(@RequestBody UserDto p) {
-        userService.save(p);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable int id) {
-        var user = userService.getById(id);
-        return ResponseEntity.ok(user);
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        userService.delete(id);
-    }
-
-    @PutMapping("/{id}")
-    public void update(@PathVariable("id") int userId, @RequestBody UserDto u) {
-        userService.update(userId,u);
-    }
-
-    @GetMapping("/{id}/posts")
-    public UserDetailDto getPostsByUserId(@PathVariable int id) {
-        return userService.getPostsByUserId(id);
-    }
-
-    @GetMapping("/{id}/posts/{postId}") // WITHOUT DTO
-    public Post getPostsByUserId(@PathVariable("id") int uId, @PathVariable("postId") int postId) {
-        return userService.getPostsByUserId(uId, postId);
-    }
+//
+//    @GetMapping("/{id}/posts/{postId}") // WITHOUT DTO
+//    public Post getPostsByUserId(@PathVariable("id") int uId, @PathVariable("postId") int postId) {
+//        return userService.getPostsByUserId(uId, postId);
+//    }
 
 
     // FOR DEMO PURPOSES
@@ -93,23 +59,9 @@ public class UserController {
         }
     }
 
-    // FOR DEMO PURPOSES
-    @GetMapping("/h/{id}")
-    public EntityModel<UserDto> getByIdH(@PathVariable int id) {
-
-        UserDto product = userService.getById(id);
-        EntityModel<UserDto> resource = EntityModel.of(product);
-        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder
-                .linkTo(
-                        WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
-        resource.add(linkTo.withRel("all-products"));
-
-        return resource;
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/multipleposts")
-    public List<UserDto> getAllUserWithMultiplePost() {
-        return userService.findAllUserHasMultiplePosts();
-    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping("/multipleposts")
+//    public List<UserDto> getAllUserWithMultiplePost() {
+//        return userService.findAllUserHasMultiplePosts();
+//    }
 }

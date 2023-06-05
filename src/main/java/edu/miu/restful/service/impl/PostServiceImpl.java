@@ -22,32 +22,8 @@ public class PostServiceImpl implements PostService {
     @Autowired
     ListMapper listMapper;
 
-    public List<PostDto> findAll() {
-        return (List<PostDto>) listMapper.mapList(postRepo.findAll(),new PostDto());}
-
-
-    public PostDto getById(int id) {
-        return modelMapper.map(postRepo.getById(id), PostDto.class);
-    }
-
-
     @Override
-    public void save(PostDto p) {
-        postRepo.save(modelMapper.map(p, Post.class));
-    }
-
-    @Override
-    public void delete(int id) {
-        postRepo.delete(id);
-    }
-
-    @Override
-    public void update(int id,  PostDto p) {
-        postRepo.update(id, modelMapper.map(p, Post.class));
-    }
-
-    @Override
-    public List<PostDto>findAllAuthorByName(String author){
-        return (List<PostDto>) listMapper.mapList(postRepo.findAllAuthorByName(author),new PostDto());}
+    public List<PostDto>findAllByAuthor(String author){
+        return (List<PostDto>) listMapper.mapList(postRepo.findAllByAuthor(author),new PostDto());}
 
 }

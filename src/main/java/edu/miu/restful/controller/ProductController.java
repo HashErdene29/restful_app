@@ -30,50 +30,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    public List<ProductDto> getAll() {
-        return productService.findAll();
-    }
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping
-//    public List<ProductDto> getAll(@RequestParam(value = "filter" ,required = false) Integer price) {
-//        return price==null?productService.findAll():productService.findAllPriceGreaterThan(price);
-//    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public void save(@RequestBody ProductDto p) {
-        productService.save(p);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getById(@PathVariable int id) {
-        var product = productService.getById(id);
-        return ResponseEntity.ok(product);
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        productService.delete(id);
-    }
-
-    @PutMapping("/{id}")
-    public void update(@PathVariable("id") int productId, @RequestBody ProductDto p) {
-        productService.update(productId,p);
-    }
-
-    @GetMapping("/{id}/reviews")
-    public ProductDetailDto getReviewsByProductId(@PathVariable int id) {
-        return productService.getReviewsByProductId(id);
-    }
-
-    @GetMapping("/{id}/reviews/{reviewId}") // WITHOUT DTO
-    public Review getReviewByProductId(@PathVariable("id") int pId, @PathVariable("reviewId") int reviewId) {
-        return productService.getReviewByProductId(pId, reviewId);
-    }
-
 
     // FOR DEMO PURPOSES
     @GetMapping("/{productId}/{reviewId}")
@@ -95,20 +51,6 @@ public class ProductController {
         } else {
             return "ID missing";
         }
-    }
-
-    // FOR DEMO PURPOSES
-    @GetMapping("/h/{id}")
-    public EntityModel<ProductDto> getByIdH(@PathVariable int id) {
-
-        ProductDto product = productService.getById(id);
-        EntityModel<ProductDto> resource = EntityModel.of(product);
-        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder
-                .linkTo(
-                        WebMvcLinkBuilder.methodOn(this.getClass()).getAll());
-        resource.add(linkTo.withRel("all-products"));
-
-        return resource;
     }
 
     @GetMapping("/map-test/{author}/{title}")

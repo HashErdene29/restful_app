@@ -2,19 +2,11 @@ package edu.miu.restful.repo;
 
 import edu.miu.restful.entity.Post;
 import edu.miu.restful.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PostRepo {
-    public List<Post> findAll();
+public interface PostRepo extends JpaRepository<Post, Long> {
 
-    public Post getById(int id);
-
-    public void save(Post p);
-
-    public void delete(int id);
-
-    public void update(int id, Post p);
-
-    List<Post>findAllAuthorByName(String author);
+    List<Post>findAllByAuthor(String author);
 }

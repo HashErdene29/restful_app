@@ -2,24 +2,14 @@ package edu.miu.restful.repo;
 
 import edu.miu.restful.entity.Product;
 import edu.miu.restful.entity.Review;
-import edu.miu.restful.entity.dto.ProductDto;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProductRepo {
-
-    public List<Product> findAll();
-
-    public Product getById(int id);
-
-    public void save(Product p);
-
-    public void delete(int id);
-
-    public void update(int id, Product p);
+public interface ProductRepo extends JpaRepository<Product, Integer> {
 
 
-    public Review getReviewByProductId(int pId, int reviewId);
+//    public Review getReviewByProductId(int pId, int reviewId);
 
-    List<Product>findAllPriceGreaterThan(int price);
+    List<Product>findAllByPriceGreaterThan(int price);
 }

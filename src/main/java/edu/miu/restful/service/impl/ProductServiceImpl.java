@@ -13,13 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepo productRepo;
+    @PersistenceContext
+    EntityManager em;
+
+    ProductRepo productRepo;
 
     @Autowired
     ModelMapper modelMapper;
@@ -27,44 +32,14 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ListMapper listMapper;
 
-    public List<ProductDto> findAll() {
-        return (List<ProductDto>) listMapper.mapList(productRepo.findAll(),new ProductDto());}
-
-
-    public ProductDto getById(int id) {
-        return modelMapper.map(productRepo.getById(id), ProductDto.class);
-    }
+//    @Override
+//    public Review getReviewByProductId(int pId, int reviewId){
+//        return productRepo.getReviewByProductId(pId, reviewId);
+//    }
 
     @Override
-    public ProductDetailDto getReviewsByProductId(int id) {
-        if(id == 0)
-            return new ProductDetailDto();
-        return modelMapper.map(productRepo.getById(id), ProductDetailDto.class);
-    }
-
-    @Override
-    public void save(ProductDto p) {
-        productRepo.save(modelMapper.map(p, Product.class));
-    }
-
-    @Override
-    public void delete(int id) {
-        productRepo.delete(id);
-    }
-
-    @Override
-    public void update(int id,  ProductDto p) {
-        productRepo.update(id, modelMapper.map(p, Product.class));
-    }
-
-    @Override
-    public Review getReviewByProductId(int pId, int reviewId){
-        return productRepo.getReviewByProductId(pId, reviewId);
-    }
-
-    @Override
-    public List<ProductDto>findAllPriceGreaterThan(int price){
-        return (List<ProductDto>) listMapper.mapList(productRepo.findAllPriceGreaterThan(price),new ProductDto());}
+    public List<ProductDto>findAllByPriceGreaterThan(int price){
+        return (List<ProductDto>) listMapper.mapList(productRepo.findAllByPriceGreaterThan(price),new ProductDto());}
 
 
 }
