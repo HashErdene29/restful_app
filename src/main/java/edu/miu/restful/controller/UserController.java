@@ -1,6 +1,7 @@
 package edu.miu.restful.controller;
 
 import edu.miu.restful.entity.Post;
+import edu.miu.restful.entity.dto.ProductDto;
 import edu.miu.restful.entity.dto.UserDetailDto;
 import edu.miu.restful.entity.dto.UserDto;
 import edu.miu.restful.service.UserService;
@@ -20,48 +21,42 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-//    @GetMapping("/{id}/posts")
-//    public UserDetailDto getPostsByUserId(@PathVariable int id) {
-//        return userService.getPostsByUserId(id);
-//    }
-//
-//    @GetMapping("/{id}/posts/{postId}") // WITHOUT DTO
-//    public Post getPostsByUserId(@PathVariable("id") int uId, @PathVariable("postId") int postId) {
-//        return userService.getPostsByUserId(uId, postId);
-//    }
-
-
-    // FOR DEMO PURPOSES
-    @GetMapping("/{userId}/{postId}")
-    public Post mapDemo(@PathVariable Map<String, Integer> pathVariables) {
-        int uId = pathVariables.get("userId");
-        int postId = pathVariables.get("postId");
-        return null;
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<UserDto> getAll() {
+        return userService.findAll();
     }
 
-    // FOR DEMO PURPOSES
-    @GetMapping(value =
-            {
-                    "/handlingMultipleEndpoints",
-                    "/handlingMultipleEndpoints/{id}"
-            })
-    public String multipleEndpointsDemo(@PathVariable(required = false) String id) {
-        if (id != null) {
-            return "ID: " + id;
-        } else {
-            return "ID missing";
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public void save(@RequestBody UserDto p) {
+        userService.save(p);
     }
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping("/multipleposts")
-//    public List<UserDto> getAllUserWithMultiplePost() {
-//        return userService.findAllUserHasMultiplePosts();
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getById(@PathVariable int id) {
+        var user = userService.getById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        userService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public void update(@PathVariable("id") int userId, @RequestBody String name) {
+        userService.update(userId, name);
+    }
+
+    @GetMapping("/filterby/{post_id}")
+    public List<UserDto> filterByPostId (@PathVariable long post_id) {
+        return userService.findAllByPosts(post_id);
+    }
+
 }

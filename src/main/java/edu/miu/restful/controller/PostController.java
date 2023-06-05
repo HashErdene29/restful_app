@@ -1,6 +1,7 @@
 package edu.miu.restful.controller;
 
 import edu.miu.restful.entity.dto.PostDto;
+import edu.miu.restful.entity.dto.ProductDto;
 import edu.miu.restful.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -23,37 +24,36 @@ public class PostController {
         this.postService = postService;
     }
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping
-//    public List<PostDto> getAll() {
-//        return postService.findAll();
-//    }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<PostDto> getAll(@RequestParam(value = "filter" ,required = false) String author) {
-        if(author!=null) {
-            return postService.findAllByAuthor(author);
-        }
-        return null;
+        return author == null ? postService.findAll() : postService.findAllByAuthor(author);
     }
 
-
-    // FOR DEMO PURPOSES
-    @GetMapping(value =
-            {
-                    "/handlingMultipleEndpoints",
-                    "/handlingMultipleEndpoints/{id}"
-            })
-    public String multipleEndpointsDemo(@PathVariable(required = false) String id) {
-        if (id != null) {
-            return "ID: " + id;
-        } else {
-            return "ID missing";
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public void save(@RequestBody PostDto p) {
+        postService.save(p);
     }
 
-    @GetMapping("/map-test/{author}/{title}")
-    public String mapInPathVariable(@PathVariable Map<String, String> vals){
-        return "author: " + vals.get("author") + "   " + "title: " + vals.get("title");
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> getById(@PathVariable int id) {
+        var product = postService.getById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        postService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public void update(@PathVariable("id") int id, @RequestBody String title) {
+        postService.update(id, title);
+    }
+    @GetMapping("/filterby/{title}")
+    public List<PostDto> filterByTitle (@PathVariable String title) {
+        return postService.findAllByTitle(title);
     }
 }

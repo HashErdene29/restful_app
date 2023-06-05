@@ -9,6 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface ProductService {
+    public List<Product> findAll();
+
+    ProductDto getById(int id);
+
+    void save(ProductDto p);
+
+    void delete(int id);
+
+    void update(int id, String name);
 
     List<ProductDto>findAllByPriceGreaterThan(int price);
 }

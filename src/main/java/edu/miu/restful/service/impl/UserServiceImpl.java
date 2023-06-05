@@ -1,5 +1,7 @@
 package edu.miu.restful.service.impl;
 
+import edu.miu.restful.entity.User_p;
+import edu.miu.restful.entity.dto.UserDto;
 import edu.miu.restful.helper.ListMapper;
 import edu.miu.restful.repo.UserRepo;
 import edu.miu.restful.service.UserService;
@@ -7,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,16 +23,31 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ListMapper listMapper;
 
+    public List<UserDto> findAll() {
+        return (List<UserDto>) listMapper.mapList(userRepo.findAll(),new UserDto());}
 
-//    @Override
-//    public UserDetailDto getPostsByUserId(int id) {
-//        if(id == 0)
-//            return new UserDetailDto();
-//        return modelMapper.map(userRepo.getById(id), UserDetailDto.class);
-//    }
 
-//    @Override
-//    public List<UserDto> findAllUserHasMultiplePosts(){
-//        return (List<UserDto>) listMapper.mapList(userRepo.findAllUserHasMultiplePosts(),new UserDto());
-//    }
+    public UserDto getById(long id) {
+        return modelMapper.map(userRepo.getById(id), UserDto.class);
+    }
+
+    @Override
+    public void save(UserDto p) {
+        userRepo.save(modelMapper.map(p, User_p.class));
+    }
+
+    @Override
+    public void delete(long id) {
+        userRepo.deleteById(id);
+    }
+
+    @Override
+    public void update(long id, String name) {
+        userRepo.updateAllById(id, name);
+    }
+
+    @Override
+    public List<UserDto> findAllByPosts(long post_id){
+        return (List<UserDto>) listMapper.mapList(userRepo.findAllByPosts(post_id),new UserDto());
+    }
 }

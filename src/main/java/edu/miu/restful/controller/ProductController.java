@@ -24,10 +24,42 @@ public class ProductController {
 
     private final ProductService productService;
 
-
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<Product> getAll() {
+        return productService.findAll();
+    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping
+//    public List<ProductDto> getAll(@RequestParam(value = "filter" ,required = false) Integer price) {
+//        return price==null?productService.findAll():productService.findAllPriceGreaterThan(price);
+//    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    public void save(@RequestBody ProductDto p) {
+        productService.save(p);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getById(@PathVariable int id) {
+        var product = productService.getById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        productService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public void update(@PathVariable("id") int productId, @RequestBody String name) {
+        productService.update(productId, name);
     }
 
 
@@ -59,6 +91,9 @@ public class ProductController {
         return "author: " + vals.get("author") + "   " + "title: " + vals.get("title");
     }
 
-
+    @GetMapping("/filterby/{price}")
+    public List<ProductDto> filterByPrice (@PathVariable int price) {
+        return productService.findAllByPriceGreaterThan(price);
+    }
 
 }

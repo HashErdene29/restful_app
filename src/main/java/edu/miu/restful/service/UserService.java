@@ -7,8 +7,16 @@ import edu.miu.restful.entity.dto.UserDto;
 import java.util.List;
 
 public interface UserService {
+    public List<UserDto> findAll();
 
-//    Post getPostsByUserId(int pId, int reviewId);
-//    List<UserDto> findAllUserHasMultiplePosts();
+    UserDto getById(long id);
+
+    void save(UserDto p);
+
+    void delete(long id);
+
+    void update(long id, String name);
+
+    List<UserDto> findAllByPosts(long post_id);
 
 }
