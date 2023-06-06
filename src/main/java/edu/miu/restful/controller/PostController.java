@@ -1,5 +1,7 @@
 package edu.miu.restful.controller;
 
+import edu.miu.restful.aspect.annotation.ExecutionTime;
+import edu.miu.restful.aspect.annotation.LogMe;
 import edu.miu.restful.entity.dto.PostDto;
 import edu.miu.restful.entity.dto.ProductDto;
 import edu.miu.restful.service.PostService;
@@ -25,6 +27,8 @@ public class PostController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @ExecutionTime
+    @LogMe
     @GetMapping
     public List<PostDto> getAll(@RequestParam(value = "filter" ,required = false) String author) {
         return author == null ? postService.findAll() : postService.findAllByAuthor(author);
@@ -36,6 +40,7 @@ public class PostController {
         postService.save(p);
     }
 
+    @LogMe
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getById(@PathVariable int id) {
         var product = postService.getById(id);

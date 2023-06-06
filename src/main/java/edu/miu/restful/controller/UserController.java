@@ -1,5 +1,7 @@
 package edu.miu.restful.controller;
 
+import edu.miu.restful.aspect.annotation.ExecutionTime;
+import edu.miu.restful.aspect.annotation.LogMe;
 import edu.miu.restful.entity.Post;
 import edu.miu.restful.entity.dto.ProductDto;
 import edu.miu.restful.entity.dto.UserDetailDto;
@@ -26,6 +28,8 @@ public class UserController {
         this.userService = userService;
     }
     @ResponseStatus(HttpStatus.OK)
+    @ExecutionTime
+    @LogMe
     @GetMapping
     public List<UserDto> getAll() {
         return userService.findAll();
@@ -37,6 +41,7 @@ public class UserController {
         userService.save(p);
     }
 
+    @LogMe
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable int id) {
         var user = userService.getById(id);

@@ -14,9 +14,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 
 //    public Review getReviewByProductId(int pId, int reviewId);
 
-    @Override
-    List<Product> findAll();
-
     void deleteById(int id);
     @Modifying
     @Query("UPDATE Product p set p.name = :name where p.id = :id")

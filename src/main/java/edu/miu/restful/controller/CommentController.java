@@ -1,5 +1,7 @@
 package edu.miu.restful.controller;
 
+import edu.miu.restful.aspect.annotation.ExecutionTime;
+import edu.miu.restful.aspect.annotation.LogMe;
 import edu.miu.restful.entity.dto.CommentDto;
 import edu.miu.restful.entity.dto.PostDto;
 import edu.miu.restful.service.CommentService;
@@ -22,6 +24,8 @@ public class CommentController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @ExecutionTime
+    @LogMe
     @GetMapping
     public List<CommentDto> getAll() {
         return commentService.findAll();
@@ -33,6 +37,7 @@ public class CommentController {
         commentService.save(c);
     }
 
+    @LogMe
     @GetMapping("/{id}")
     public ResponseEntity<CommentDto> getById(@PathVariable int id) {
         var product = commentService.getById(id);

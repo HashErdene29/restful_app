@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.EntityManager;
@@ -20,12 +21,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     @PersistenceContext
     EntityManager em;
 
-    ProductRepo productRepo;
+    private final ProductRepo productRepo;
 
     @Autowired
     ModelMapper modelMapper;
@@ -33,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ListMapper listMapper;
 
-    public List<Product> findAll() {
-        return productRepo.findAll(); }
+    public List<ProductDto> findAll() {
+        return (List<ProductDto>) listMapper.mapList(productRepo.findAll(), new ProductDto()); }
 
 
     public ProductDto getById(int id) {

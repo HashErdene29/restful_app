@@ -1,5 +1,7 @@
 package edu.miu.restful.controller;
 
+import edu.miu.restful.aspect.annotation.ExecutionTime;
+import edu.miu.restful.aspect.annotation.LogMe;
 import edu.miu.restful.entity.Product;
 import edu.miu.restful.entity.Review;
 import edu.miu.restful.entity.dto.ProductDetailDto;
@@ -29,8 +31,10 @@ public class ProductController {
         this.productService = productService;
     }
     @ResponseStatus(HttpStatus.OK)
+    @ExecutionTime
+    @LogMe
     @GetMapping
-    public List<Product> getAll() {
+    public List<ProductDto> getAll() {
         return productService.findAll();
     }
 //    @ResponseStatus(HttpStatus.OK)
@@ -45,6 +49,7 @@ public class ProductController {
         productService.save(p);
     }
 
+    @LogMe
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getById(@PathVariable int id) {
         var product = productService.getById(id);
@@ -94,6 +99,11 @@ public class ProductController {
     @GetMapping("/filterby/{price}")
     public List<ProductDto> filterByPrice (@PathVariable int price) {
         return productService.findAllByPriceGreaterThan(price);
+    }
+
+    @GetMapping("/test-detach")
+    public void test(){
+        productService.testData();
     }
 
 }
