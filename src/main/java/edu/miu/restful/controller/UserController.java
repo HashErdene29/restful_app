@@ -54,9 +54,12 @@ public class UserController {
         userService.update(userId, name);
     }
 
-    @GetMapping("/filterby/{post_id}")
-    public List<UserDto> filterByPostId (@PathVariable long post_id) {
-        return userService.findAllByPosts(post_id);
-    }
+//    @GetMapping("/filterby/{post_id}")
+//    public List<UserDto> filterByPostId (@PathVariable long post_id) {
+//        return userService.findAllByPosts(post_id);
+//    }
+
+    @GetMapping("/filterby/{n}")
+    public List<UserDto> filterUsersByPostCount (@PathVariable int n){ return userService.findUsersByPostCount(n); }
 
 }

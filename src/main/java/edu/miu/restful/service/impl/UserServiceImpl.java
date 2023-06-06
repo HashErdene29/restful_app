@@ -46,8 +46,13 @@ public class UserServiceImpl implements UserService {
         userRepo.updateAllById(id, name);
     }
 
+//    @Override
+//    public List<UserDto> findAllByPosts(long post_id){
+//        return (List<UserDto>) listMapper.mapList(userRepo.findAllByPosts(post_id),new UserDto());
+//    }
+
     @Override
-    public List<UserDto> findAllByPosts(long post_id){
-        return (List<UserDto>) listMapper.mapList(userRepo.findAllByPosts(post_id),new UserDto());
+    public List<UserDto> findUsersByPostCount(int n){
+        return (List<UserDto>) listMapper.mapList(userRepo.findUsersByPostCount(n),new UserDto());
     }
 }
