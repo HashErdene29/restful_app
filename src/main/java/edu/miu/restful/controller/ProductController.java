@@ -31,8 +31,6 @@ public class ProductController {
         this.productService = productService;
     }
     @ResponseStatus(HttpStatus.OK)
-    @ExecutionTime
-    @LogMe
     @GetMapping
     public List<ProductDto> getAll() {
         return productService.findAll();
@@ -48,8 +46,7 @@ public class ProductController {
     public void save(@RequestBody ProductDto p) {
         productService.save(p);
     }
-
-    @LogMe
+    
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getById(@PathVariable int id) {
         var product = productService.getById(id);

@@ -27,8 +27,6 @@ public class PostController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @ExecutionTime
-    @LogMe
     @GetMapping
     public List<PostDto> getAll(@RequestParam(value = "filter" ,required = false) String author) {
         return author == null ? postService.findAll() : postService.findAllByAuthor(author);
@@ -40,7 +38,6 @@ public class PostController {
         postService.save(p);
     }
 
-    @LogMe
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getById(@PathVariable int id) {
         var product = postService.getById(id);

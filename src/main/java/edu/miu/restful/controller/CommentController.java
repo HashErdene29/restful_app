@@ -24,8 +24,6 @@ public class CommentController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @ExecutionTime
-    @LogMe
     @GetMapping
     public List<CommentDto> getAll() {
         return commentService.findAll();
@@ -37,7 +35,6 @@ public class CommentController {
         commentService.save(c);
     }
 
-    @LogMe
     @GetMapping("/{id}")
     public ResponseEntity<CommentDto> getById(@PathVariable int id) {
         var product = commentService.getById(id);
