@@ -19,7 +19,7 @@ public class Post {
     private String author;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User_p user_p;
+    private User user_p;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
 //    @JoinColumn(name = "post_id")

@@ -1,6 +1,6 @@
 package edu.miu.restful.service.impl;
 
-import edu.miu.restful.entity.User_p;
+import edu.miu.restful.entity.User;
 import edu.miu.restful.entity.dto.UserDto;
 import edu.miu.restful.helper.ListMapper;
 import edu.miu.restful.repo.UserRepo;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserDto p) {
-        userRepo.save(modelMapper.map(p, User_p.class));
+        userRepo.save(modelMapper.map(p, User.class));
     }
 
     @Override
@@ -51,8 +51,8 @@ public class UserServiceImpl implements UserService {
 //        return (List<UserDto>) listMapper.mapList(userRepo.findAllByPosts(post_id),new UserDto());
 //    }
 
-    @Override
-    public List<UserDto> findUsersByPostCount(int n){
-        return (List<UserDto>) listMapper.mapList(userRepo.findUsersByPostCount(n),new UserDto());
-    }
+//    @Override
+//    public List<UserDto> findUsersByPostCount(int n){
+//        return (List<UserDto>) listMapper.mapList(userRepo.findUsersByPostCount(n),new UserDto());
+//    }
 }

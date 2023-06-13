@@ -18,7 +18,7 @@ public interface UserService {
     void update(long id, String name);
 
 //    List<UserDto> findAllByPosts(long post_id);
-    List<UserDto> findUsersByPostCount(int n);
+//    List<UserDto> findUsersByPostCount(int n);
 
 
 }

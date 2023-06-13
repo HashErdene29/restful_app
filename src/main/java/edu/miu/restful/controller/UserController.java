@@ -64,7 +64,7 @@ public class UserController {
 //        return userService.findAllByPosts(post_id);
 //    }
 
-    @GetMapping("/filterby/{n}")
-    public List<UserDto> filterUsersByPostCount (@PathVariable int n){ return userService.findUsersByPostCount(n); }
+//    @GetMapping("/filterby/{n}")
+//    public List<UserDto> filterUsersByPostCount (@PathVariable int n){ return userService.findUsersByPostCount(n); }
 
 }

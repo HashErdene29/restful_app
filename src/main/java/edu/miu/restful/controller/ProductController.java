@@ -14,6 +14,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/products")
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductController {
 
     private final ProductService productService;
@@ -32,6 +33,7 @@ public class ProductController {
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<ProductDto> getAll() {
         return productService.findAll();
     }
@@ -74,33 +76,33 @@ public class ProductController {
     }
 
     // FOR DEMO PURPOSES
-    @GetMapping(value =
-            {
-                    "/handlingMultipleEndpoints",
-                    "/handlingMultipleEndpoints/{id}"
-            })
-    public String multipleEndpointsDemo(@PathVariable(required = false) String id) {
-        if (id != null) {
-            return "ID: " + id;
-        } else {
-            return "ID missing";
-        }
-    }
+//    @GetMapping(value =
+//            {
+//                    "/handlingMultipleEndpoints",
+//                    "/handlingMultipleEndpoints/{id}"
+//            })
+//    public String multipleEndpointsDemo(@PathVariable(required = false) String id) {
+//        if (id != null) {
+//            return "ID: " + id;
+//        } else {
+//            return "ID missing";
+//        }
+//    }
 
-    @GetMapping("/map-test/{author}/{title}")
-    public String mapInPathVariable(@PathVariable Map<String, String> vals){
-
-        return "author: " + vals.get("author") + "   " + "title: " + vals.get("title");
-    }
+//    @GetMapping("/map-test/{author}/{title}")
+//    public String mapInPathVariable(@PathVariable Map<String, String> vals){
+//
+//        return "author: " + vals.get("author") + "   " + "title: " + vals.get("title");
+//    }
 
     @GetMapping("/filterby/{price}")
     public List<ProductDto> filterByPrice (@PathVariable int price) {
         return productService.findAllByPriceGreaterThan(price);
     }
 
-    @GetMapping("/test-detach")
-    public void test(){
-        productService.testData();
-    }
+//    @GetMapping("/test-detach")
+//    public void test(){
+//        productService.testData();
+//    }
 
 }
